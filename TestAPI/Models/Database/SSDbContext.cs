@@ -21,6 +21,7 @@ namespace ShowAndSellAPI.Models.Database
         public DbSet<SSImage> Images { get; set; }
         public DbSet<SSBookmark> Bookmarks { get; set; }
         public DbSet<SSMessage> Messages { get; set; }
+        public DbSet<SSRating> Ratings { get; set; }
 
         // Constructor
         public SSDbContext(DbContextOptions<SSDbContext> options) : base(options) { }

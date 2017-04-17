@@ -28,6 +28,6 @@ namespace ShowAndSellAPI.Models
         // extra properties
         public DateTime DateCreated { get; set; }
         public int ItemsSold { get; set; }
-        public int Rating { get; set; }
+        public float Rating { get; set; }
     }
 }

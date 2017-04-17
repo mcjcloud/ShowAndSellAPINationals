@@ -35,7 +35,14 @@ namespace ShowAndSellAPI.Controllers
         public IActionResult AllGroups()
         {
             IEnumerable<SSGroup> groups = _context.Groups.ToArray();
-            if (groups != null && groups.Count() > 0) return new ObjectResult(groups);
+            if (groups != null && groups.Count() > 0)
+            {
+                foreach(var group in groups)
+                {
+                    group.Routing = "";
+                }
+                return new ObjectResult(groups);
+            }
             else return NotFound("No Groups found.");
         }
         // /api/groups/group?id={group id}
@@ -46,6 +53,7 @@ namespace ShowAndSellAPI.Controllers
             SSGroup group = _context.Groups.Where(e => e.SSGroupId.Equals(id)).FirstOrDefault();
             if(group != null)
             {
+                group.Routing = "";
                 return new ObjectResult(group);
             }
             else    // group not found
@@ -60,7 +68,10 @@ namespace ShowAndSellAPI.Controllers
         {
             SSGroup group = _context.Groups.Where(e => e.AdminId.Equals(adminId)).FirstOrDefault();
             if (group == null) return NotFound("Group not found with Admin ID " + adminId);
-            else return new ObjectResult(group);
+            else {
+                group.Routing = "";
+                return new ObjectResult(group);
+            }
         }
         // /api/groups/search
         // GET an array of Groups whose names contain the given string.
@@ -68,7 +79,12 @@ namespace ShowAndSellAPI.Controllers
         public IActionResult Search([FromQuery]string name)
         {
             IEnumerable<SSGroup> groups = _context.Groups.Where(e => e.Name.Contains(name)).ToArray();
-            if (groups != null && groups.Count() > 0) return new ObjectResult(groups);
+            if (groups != null && groups.Count() > 0) {
+                foreach(var group in groups) {
+                    group.Routing = "";
+                }
+                return new ObjectResult(groups);
+            }
             else return NotFound("No groups containing the name " + name + " found.");
         }
 
@@ -128,7 +144,10 @@ namespace ShowAndSellAPI.Controllers
             {
                 SSGroup value;
                 groupMap.TryGetValue(key, out value);
-                if (value != null) groupsInRadius.Add(value);
+                if (value != null) {
+                    value.Routing = "";
+                    groupsInRadius.Add(value);
+                }
             }
 
             // return the list
@@ -172,8 +191,10 @@ namespace ShowAndSellAPI.Controllers
                 {
                     SSGroup group;
                     groupMap.TryGetValue(keysSorted.ElementAt(i), out group);
-                    if(group != null)
+                    if(group != null) {
+                        group.Routing = "";
                         closestGroups.Add(group);
+                    }
                 }
 
                 return new ObjectResult(closestGroups);
@@ -189,14 +210,14 @@ namespace ShowAndSellAPI.Controllers
 
             // if no admin was specified.
             // bool is if there is insufficient data entered.
-            bool invalidRequest = groupRequest.Group.AdminId == null || 
+            bool invalidRequest = groupRequest.Group.AdminId == null ||
                 groupRequest.Group.AdminId == "" ||
                 groupRequest.Group.Routing == null ||
                 groupRequest.Group.Routing == "" ||
-                groupRequest.Group.Name == null || 
-                groupRequest.Group.Name == "" || 
+                groupRequest.Group.Name == null ||
+                groupRequest.Group.Name == "" ||
                 groupRequest.Password == null ||
-                groupRequest.Group.LocationDetail == "" || 
+                groupRequest.Group.LocationDetail == "" ||
                 groupRequest.Group.LocationDetail == null;
 
             if (invalidRequest) return StatusCode(449, "Some fields missing or invalid.");
@@ -223,6 +244,48 @@ namespace ShowAndSellAPI.Controllers
             _context.SaveChanges();
 
             return new ObjectResult(groupRequest.Group);
+        }
+
+        [HttpPost]
+        public IActionResult RateGroup([FromQuery]string id, [FromQuery]int rating, [FromQuery]string userId, [FromQuery]string password)
+        {
+            SSGroup group = _context.Groups.Where(e => e.SSGroupId.Equals(id)).FirstOrDefault();
+            if (group == null) return NotFound("Group not found.");
+
+            SSUser user = _context.Users.Where(e => e.SSUserId.Equals(userId)).FirstOrDefault();
+            if (user == null) return NotFound("User not found");
+            if (!user.Password.Equals(password)) return Unauthorized();
+
+            double sum = 0.0;
+            bool exists = false;
+            foreach(var rat in _context.Ratings)
+            {
+                if(rat.UserId.Equals(user.SSUserId))
+                {
+                    // change the user's rating
+                    rat.Rating = rating;
+                    exists = true;
+                }
+                sum += rat.Rating;
+            }
+
+            if(!exists)
+            {
+                // create new Ratings
+                _context.Ratings.Add(new SSRating {
+                    SSRatingId = Guid.NewGuid().ToString(),
+                    UserId = userId,
+                    Rating = rating
+                });
+            }
+
+            sum += rating;
+            float newRating = (float) sum / Math.Max(1, _context.Ratings.Count());
+            group.Rating = newRating;
+
+            // save and return
+            _context.SaveChanges();
+            return new ObjectResult(newRating);
         }
 
         // /api/groups/update?id={group id}

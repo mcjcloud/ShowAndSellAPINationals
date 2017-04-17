@@ -1379,6 +1379,48 @@
                     </table>
                 </div>
             </div>
+            <div class="method" id="RateGroup">
+                <p class="alignLeft">POST RateGroup</p>
+                <p class="alignRight">POST a rating for a group with the given information.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/rategroup?id={group id}&rating={integer rating}&userId={the GUID of the user rating the group}&password={the user's password}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Group found with given ID. No User found with the given ID.</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Incorrect password</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Ratign applied</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <div class="method" id="Update">
                 <p class="alignLeft">PUT Update</p>
                 <p class="alignRight">PUT a Group in the server with the new data.</p>

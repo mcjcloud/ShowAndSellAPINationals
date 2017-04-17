@@ -10798,10 +10798,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\brayd\\documents\\visual studio 2017\\Projects\\TestAPI\\TestAPI\\ShowAndSellAPI.csproj",
+      "projectUniqueName": "C:\\Users\\brayd\\Documents\\Visual Studio 2017\\Projects\\TestAPI\\TestAPI\\ShowAndSellAPI.csproj",
       "projectName": "ShowAndSellAPI",
-      "projectPath": "C:\\Users\\brayd\\documents\\visual studio 2017\\Projects\\TestAPI\\TestAPI\\ShowAndSellAPI.csproj",
-      "outputPath": "C:\\Users\\brayd\\documents\\visual studio 2017\\Projects\\TestAPI\\TestAPI\\obj\\",
+      "projectPath": "C:\\Users\\brayd\\Documents\\Visual Studio 2017\\Projects\\TestAPI\\TestAPI\\ShowAndSellAPI.csproj",
+      "outputPath": "C:\\Users\\brayd\\Documents\\Visual Studio 2017\\Projects\\TestAPI\\TestAPI\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"

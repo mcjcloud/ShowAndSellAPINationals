@@ -51,7 +51,7 @@ namespace TestAPI.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("Rating");
+                    b.Property<float>("Rating");
 
                     b.Property<string>("Routing");
 
@@ -114,6 +114,20 @@ namespace TestAPI.Migrations
                     b.HasKey("SSMessageId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("ShowAndSellAPI.Models.SSRating", b =>
+                {
+                    b.Property<string>("SSRatingId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Rating");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("SSRatingId");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("ShowAndSellAPI.Models.SSUser", b =>
