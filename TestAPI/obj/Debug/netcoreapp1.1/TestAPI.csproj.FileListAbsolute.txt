@@ -1,0 +1,9 @@
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\TestAPI.deps.json
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\TestAPI.runtimeconfig.json
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\TestAPI.runtimeconfig.dev.json
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\TestAPI.dll
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\TestAPI.pdb
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\obj\Debug\netcoreapp1.1\TestAPI.csprojResolveAssemblyReference.cache
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\obj\Debug\netcoreapp1.1\TestAPI.AssemblyInfo.cs
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\obj\Debug\netcoreapp1.1\TestAPI.dll
+c:\users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\obj\Debug\netcoreapp1.1\TestAPI.pdb

@@ -1,0 +1,9 @@
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\ShowAndSellAPI.deps.json
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\ShowAndSellAPI.runtimeconfig.json
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\ShowAndSellAPI.runtimeconfig.dev.json
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\ShowAndSellAPI.dll
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\bin\Debug\netcoreapp1.1\ShowAndSellAPI.pdb
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\obj\Debug\netcoreapp1.1\ShowAndSellAPI.csprojResolveAssemblyReference.cache
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\obj\Debug\netcoreapp1.1\ShowAndSellAPI.AssemblyInfo.cs
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\obj\Debug\netcoreapp1.1\ShowAndSellAPI.dll
+C:\Users\brayd\documents\visual studio 2017\Projects\TestAPI\TestAPI\obj\Debug\netcoreapp1.1\ShowAndSellAPI.pdb

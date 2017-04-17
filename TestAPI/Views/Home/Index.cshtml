@@ -1,0 +1,1749 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Docs</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".dropDown").slideUp();
+
+            $(".method").on('click', function () {
+                $(this).children(".dropDown").slideToggle();
+            });
+        });
+    </script>
+
+    <style>
+        h1 {
+            text-align: center;
+        }
+        body {
+            background-color: #4caf50;
+        }
+        table {
+            width: 100%;
+        }
+        table, td, th {
+            background-color: beige;
+            border: double 2px;
+        }
+
+        @* All of the documentation *@
+        .docs {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: #dec961;
+            
+            margin: auto;
+            padding: 1px;
+            width: 75%;
+        }
+
+        @* encapsulating controller *@
+        .controller {
+            margin: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 1px;
+
+            background-color: #4caf50;
+        }
+
+        @* a method *@
+        .method {
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
+        @* represents a drop down item. *@
+        .dropDown {
+            background-color: inherit;
+            font-size: 14px;
+        }
+
+        .alignRight {
+            float: right;
+        }
+        .alignLeft {
+            float: left;
+        }
+
+        .controller .method:nth-child(odd) {
+            background-color: #97821A;
+        }
+        .controller .method:nth-child(even) {
+            background-color: #BCA639; 
+        }
+    </style>
+</head>
+
+<body>
+    <div class="docs">
+        <h1>Show &amp; Sell Documentation</h1>
+
+        <!-- Users Controller -->
+        <div class="controller" >
+            <h2>Users</h2>
+            <div class="method" id="AllUsers">
+                <p class="alignLeft">GET AllUsers</p>
+                <p class="alignRight">GET all Users if the devPassword is correct.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/users/allusers?devPassword={dev password}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <td>Code</td>
+                            <td>Reason</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Users found</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>The provided password was incorrect</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Request successful, returns the Users a json array</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Search">
+                <p class="alignLeft">GET Search</p>
+                <p class="alignRight">GET all Users (excluding passwords) matching the given name.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/users/search?name={name}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <td>Code</td>
+                            <td>Reason</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Users found with given name</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Found Users matching, returned as a json array of Users (no passwords)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="UserByUsername">
+                <p class="alignLeft">GET UserByEmail</p>
+                <p class="alignRight">GET a User with the given email and password.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/users/userbyemail?email={email}&password={user password}</p>
+                    <div style="clear: both"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <td>Code</td>
+                            <td>Reason</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Users found with given email</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Password given does not match email</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Found User, returned User as json</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="UserByUserId">
+                <p class="alignLeft">GET UserByUserId</p>
+                <p class="alignRight">GET a User with the given User ID and password.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/users/userbyuserid?id={user id}&password={user password}</p>
+                    <div style="clear: both"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <td>Code</td>
+                            <td>Reason</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Users found with given User ID</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Password given does not match User ID</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Found User, returned User as json</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="GoogleUser">
+                <p class="alignLeft">POST GoogleUser</p>
+                <p class="alignRight">GET and/or create a user from google credentials.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/users/googleuser</p>
+                    <div style="clear: both"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>the gmail email address</td>
+                        </tr>
+                        <tr>
+                            <td>UserId</td>
+                            <td>the id from the GIDSignIn</td>
+                        </tr>
+                        <tr>
+                            <td>firstName</td>
+                            <td>the first name of the user (parse from the GIDSignIn)</td>
+                        </tr>
+                        <tr>
+                            <td>lastName</td>
+                            <td>the last name of the user (parse from GIDSignIn)</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <td>Code</td>
+                            <td>Reason</td>
+                        </tr>
+                        <tr>
+                            <td>409</td>
+                            <td>Account with gmail account already exists.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>User found/created and returned.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Create">
+                <p class="alignLeft">POST Create</p>
+                <p class="alignRight">POST a User to the server.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/users/create</p>
+                    <div style="clear: both"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>email</td>
+                            <td>(string) the new user's email</td>
+                        </tr>
+                        <tr>
+                            <td>password</td>
+                            <td>(string) the password of the new user</td>
+                        </tr>
+                        <tr>
+                            <td>firstName</td>
+                            <td>(string) new user's first name</td>
+                        </tr>
+                        <tr>
+                            <td>lastName</td>
+                            <td>(string) the new user's last name</td>
+                        </tr>
+                        <tr>
+                            <td>groupId</td>
+                            <td>(string) the ID of the group this user is associated with.</td>
+                        </tr>
+                    </table>
+
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <td>Code</td>
+                            <td>Reason</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Group not found.</td>
+                        </tr>
+                        <tr>
+                            <td>449</td>
+                            <td>Some fields missing or invalid. Email in use. Password invalid.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>User created. User object returned as json.</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="method" id="Update">
+                <p class="alignLeft">PUT Update</p>
+                <p class="alignRight">PUT a User with the updated data.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/users/update?id={user id}</p>
+                    <div style="clear: both"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>newEmail</td>
+                            <td>(string) the user's new email</td>
+                        </tr>
+                        <tr>
+                            <td>oldPassword</td>
+                            <td>(string) the user's old password</td>
+                        </tr>
+                        <tr>
+                            <td>newPassword</td>
+                            <td>(string) (optional) the new password of the user</td>
+                        </tr>
+                        <tr>
+                            <td>newFirstName</td>
+                            <td>(string) user's new first name</td>
+                        </tr>
+                        <tr>
+                            <td>newLastName</td>
+                            <td>(string) the user's new last name</td>
+                        </tr>
+                        <tr>
+                            <td>newGroupId</td>
+                            <td>(string) the ID of the new group this User is associated with</td>
+                        </tr>
+                    </table>
+
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <td>Code</td>
+                            <td>Reason</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>User not found with given ID. Group not found.</td>
+                        </tr>
+                        <tr>
+                            <td>449</td>
+                            <td>Fields missing or invalid. new password is the same as old password.</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Old password is incorrect.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>User updated. User object returned as json.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Delete">
+                <p class="alignLeft">DELETE Delete</p>
+                <p class="alignRight">DELETE a User from the server (deletes Group and Items in that group).</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/users/delete?id={user id}&password={user password}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <td>Code</td>
+                            <td>Reason</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No User found with given ID</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>The provided password was incorrect</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Deleted successfully. Returns deleted User as a json.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Items Controller -->
+        <div class="controller">
+            <h2>Items</h2>
+            <div class="method" id="AllItems">
+                <p class="alignLeft">GET AllItems</p>
+                <p class="alignRight">GET all Items on the server</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/allitems</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Items found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Items found. Returning a json array of Items.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="SearchGroup">
+                <p class="alignLeft">GET SearchGroup</p>
+                <p class="alignRight">GET an array of Items with a given name, in a given Group.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">api/items/searchgroup?name={name}&groupId={group id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Items matching name in the specified Group.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Returns array of Items </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Search">
+                <p class="alignLeft">GET Search</p>
+                <p class="alignRight">GET an array of Items from any Group with the given name.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/search?name={name}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Items matching name.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Items found, returned in json array.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Items">
+                <p class="alignLeft">GET Items</p>
+                <p class="alignRight">GET an array of Items in a given Group</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/items?groupId={group id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No group with specified Group. No Items in Group.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Found Items, returning json array.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="ItemsInRange">
+                <p class="alignLeft">GET ItemsInRange</p>
+                <p class="alignRight">GET an array of Items in a given Group, from index start (inclusive) to end (exclusive)</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/itemsinrange?groupId={group id}&start={start (int)}&end={end (int)}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Group not found. No Items found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Array of Items returned from start to end.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Approved">
+                <p class="alignLeft">GET Approved</p>
+                <p class="alignRight">GET approved Items in the given Group</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/approved?groupId={group id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No approved Items.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Returns array of approved Items. .</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="ApprovedInRange">
+                <p class="alignLeft">GET ApprovedInRange</p>
+                <p class="alignRight">GET approved Items in the given Group from start (inclusive) to end (exclusive)</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/approvedinrange?groupId={group id}&start={start (int)}&end={end (int)}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Group not found. No approved Items.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Returns array of approved Items from start to end.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Item">
+                <p class="alignLeft">GET Item</p>
+                <p class="alignRight">GET an Item with the given id</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/item?id={item id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Item with given ID.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Returns the Item in json format.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="PaymentToken">
+                <p class="alignLeft">GET PaymentToken</p>
+                <p class="alignRight">GET a token to request payment nonce.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/paymenttoken</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>the payment token as a string.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="FullImage">
+                <p class="alignLeft">GET FullImage</p>
+                <p class="alignRight">GET the fullsize image for the given ItemID</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/fullimage?itemId={item id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Image not found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>the image as a base64 encoded string.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="BuyItem">
+                <p class="alignLeft">POST BuyItem</p>
+                <p class="alignRight">POST buy an Item with the given ID under the given userId and password.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/buyitem?id={item id}&userId={id of user buying}&password={password of user buying}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>token</td>
+                            <td>(string) the token from calling PaymentToken</td>
+                        </tr>
+                        <tr>
+                            <td>paymentMethodNonce</td>
+                            <td>(string) the payment method nonce (see <a href="https://developers.braintreepayments.com/start/hello-client/ios/v4">Braintree Client Docs</a>)</td>
+                        </tr>
+                        <tr>
+                            <td>amount</td>
+                            <td>(double) the price of the Item.</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Item not found. Group the Item is in not found. Admin of group not found.</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Password is incorrect.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Returns the Item purchased in json format. User will recieve confirmation email after calling this method.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Create">
+                <p class="alignLeft">POST Create</p>
+                <p class="alignRight">Post an Item.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/create</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>groupId</td>
+                            <td>(string) The ID of the group the item belongs to.</td>
+                        </tr>
+                        <tr>
+                            <td>ownerId</td>
+                            <td>(string) The ID of the user posting the item.</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>(string) The name of the Item.</td>
+                        </tr>
+                        <tr>
+                            <td>price</td>
+                            <td>(string) The suggested price of the Item.</td>
+                        </tr>
+                        <tr>
+                            <td>condition</td>
+                            <td>(string) the condition the item is in.</td>
+                        </tr>
+                        <tr>
+                            <td>description</td>
+                            <td>(string) a short description of the item.</td>
+                        </tr>
+                        <tr>
+                            <td>thumbnail</td>
+                            <td>(string) a base64 encoded image.</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                            <td>Invalid json body.</td>
+                        </tr>
+                        <tr>
+                            <td>449</td>
+                            <td>Name missing or invalid. Group missing or invalid. Owner missing or invalid. Other parameters invalid.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Item created. Returns posted object as json.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Update">
+                <p class="alignLeft">PUT Update</p>
+                <p class="alignRight">PUT update an Item given the Item's Group admin's password is provided.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/update?id={item id}&adminPassword={group admin password}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>newName</td>
+                            <td>(string) the new name of the Item.</td>
+                        </tr>
+                        <tr>
+                            <td>newPrice</td>
+                            <td>(string) the new price of the Item.</td>
+                        </tr>
+                        <tr>
+                            <td>newCondition</td>
+                            <td>(string) the new condition of the item.</td>
+                        </tr>
+                        <tr>
+                            <td>newDescription</td>
+                            <td>(string) a new short description for the item.</td>
+                        </tr>
+                        <tr>
+                            <td>newThumbnail</td>
+                            <td>(string) a new base64 encoded image.</td>
+                        </tr>
+                        <tr>
+                            <td>approved</td>
+                            <td>(boolean) if the item is approved or not.</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>The password is incorrect.</td>
+                        </tr>
+                        <tr>
+                            <td>449</td>
+                            <td>Some fields are missing or invalid.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Update successful, returns updated Item.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Delete">
+                <p class="alignLeft">DELETE Delete</p>
+                <p class="alignRight">DELETE an Item with the given id, and the password of the owning User or Group administrator.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/delete?id={item id}&password={item owner or admin password}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>The password does not match the Item owner or Item Group administrator.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Item deleted. Returns the deleted Item.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Groups Controller -->
+        <div class="controller">
+            <h2>Groups</h2>
+            <div class="method" id="AllGroups">
+                <p class="alignLeft">GET AllGroups</p>
+                <p class="alignRight">GET all Groups on the server</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/allgroups</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Groups found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Groups found. Returning a json array of Groups.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Group">
+                <p class="alignLeft">GET Group</p>
+                <p class="alignRight">GET a group with the given Group ID.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/group?id={group id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Group found with given ID.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Group found. Returns Group as json.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="GroupWithAdmin">
+                <p class="alignLeft">GET GroupWithAdmin</p>
+                <p class="alignRight">GET a group with the given Admin ID.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/groupwithadmin?adminId={group id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Group found with given Admin ID.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Group found. Returns Group as json.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="GroupsInRadius">
+                <p class="alignLeft">GET GroupsInRadius</p>
+                <p class="alignRight">GET all of the groups within a certain radius.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/groupsinradius?radius={(float) radius in miles)}&latitude={(double) latitude of source}&longitude={(double) longitude of source}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Groups in given radius</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Groups found. Returns Groups as json array.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="ClosestGroups">
+                <p class="alignLeft">GET ClosestGroups</p>
+                <p class="alignRight">GET n closest groups to coordinates.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/closestgroups?n={number of groups to return}&latitude={latitude of source}&longitude={longitude of source}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Groups found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Groups found. Returns Groups as json array.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Search">
+                <p class="alignLeft">GET Search</p>
+                <p class="alignRight">GET an array of Groups whose names contain the given string.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/search?name={group name}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Groups found with given ID.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Groups found. Returning a json array of Groups.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Create">
+                <p class="alignLeft">POST Create</p>
+                <p class="alignRight">POST a new Group to the server.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/create</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>group</td>
+                            <td>(object) the group to post in json</td>
+                        </tr>
+                        <tr>
+                            <td>├─ name</td>
+                            <td>(string) the name of the group</td>
+                        </tr>
+                        <tr>
+                            <td>├─ adminId</td>
+                            <td>(string) the ID of the new Group's admin</td>
+                        </tr>
+                        <tr>
+                            <td>├─ address</td>
+                            <td>(string) the address of the Group location.</td>
+                        </tr>
+                        <tr>
+                            <td>├─ routing</td>
+                            <td>(string) the routing number of the Group's bank account</td>
+                        </tr>
+                        <tr>
+                            <td>├─ latitude</td>
+                            <td>(double) the latitude coordinate of the location.</td>
+                        </tr>
+                        <tr>
+                            <td>├─ longitude</td>
+                            <td>(double) the longitude coordinate of the location.</td>
+                        </tr>
+                        <tr>
+                            <td>└─ locationDetail</td>
+                            <td>(string) details to help somebody find the exchange location.</td>
+                        </tr>
+                        <tr>
+                            <td>password</td>
+                            <td>(string)the password of the new Group's admin</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                            <td>Admin already owns a group. Group name taken.</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Admin not found.</td>
+                        </tr>
+                        <tr>
+                            <td>449</td>
+                            <td>Some fields missing or invalid.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Group created. Returns the created Group.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Update">
+                <p class="alignLeft">PUT Update</p>
+                <p class="alignRight">PUT a Group in the server with the new data.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/update?id={group id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>newName</td>
+                            <td>(string) the new name for the Group.</td>
+                        </tr>
+                        <tr>
+                            <td>newLatitude</td>
+                            <td>(double) the new latitude coordinate for exchange.</td>
+                        </tr>
+                        <tr>
+                            <td>newAddress</td>
+                            <td>(string) the new address of the Group.</td>
+                        </tr>
+                        <tr>
+                            <td>newLongitude</td>
+                            <td>(double) the new longitude coordinate for exchange.</td>
+                        </tr>
+                        <tr>
+                            <td>newLocationDetail</td>
+                            <td>(string) the new location details.</td>
+                        </tr>
+                        <tr>
+                            <td>password</td>
+                            <td>(string) the Group admin password.</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                            <td>Admin already has Group. Group name in use.</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Group not found. Admin not found.</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Password incorrect.</td>
+                        </tr>
+                        <tr>
+                            <td>449</td>
+                            <td>Some fields missing or invalid.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Group updated. Updated Group returned.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Delete">
+                <p class="alignLeft">DELETE Delete</p>
+                <p class="alignRight">DELETE a Group from the server.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/delete?id={group id}&password={admin password}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Group not found. Admin not found.</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Password incorrect.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Group deleted. Deleted group returned.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookmarks Controller -->
+        <div class="controller">
+            <h2>Bookmarks</h2>
+            <div class="method" id="Bookmarks">
+                <p class="alignLeft">GET Bookmarks</p>
+                <p class="alignRight">GET Bookmarks with the given User ID and password.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/bookmarks/bookmarks?userId={user id}&password={user password}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Bookmarks under the given User.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Returns an array of Items along with the Bookmark ID.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Create">
+                <p class="alignLeft">POST Create</p>
+                <p class="alignRight">POST a new bookmark.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/bookmarks/create?userId={user id}&itemId={id of item to bookmark}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>User not found. Item not found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Bookmark created. Returns the Bookmark object (Bookmark ID, User ID, Item ID)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Delete">
+                <p class="alignLeft">DELETE Delete</p>
+                <p class="alignRight">DELETE a Bookmark.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/bookmarks/delete?id={bookmark id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Bookmark not found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Bookmark deleted. Returns deleted Bookmark object (see Create method).</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Controller -->
+        <div class="controller">
+            <h2>Chat</h2>
+            <div class="method" id="Messages">
+                <p class="alignLeft">GET Messages</p>
+                <p class="alignRight">GET Messages from the specified Item ID.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/chat/messages?itemId={id of item to get messages for}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Item not found. Messages not found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Returns an array of Messages associated with the given Item ID.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Create">
+                <p class="alignLeft">POST Create</p>
+                <p class="alignRight">POST a new Message.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/chat/create?posterId={user id of poster}&password={user password}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>itemId</td>
+                            <td>(string) the ID of the item you're posting on.</td>
+                        </tr>
+                        <tr>
+                            <td>body</td>
+                            <td>(string) the message content</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>User not found. Item not found.</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Password incorrect.</td>
+                        </tr>
+                        <tr>
+                            <td>449</td>
+                            <td>Body must not be empty.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Message posted. Returns the message as a json.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Delete">
+                <p class="alignLeft">DELETE Delete</p>
+                <p class="alignRight">DELETE a Message.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/chat/delete?id={message id}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Message not found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Message deleted. Returns deleted Message object.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

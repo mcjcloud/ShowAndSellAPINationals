@@ -1,0 +1,1 @@
+﻿Invalid parameters to add a new group. Fill in the following parameters: group (name and admin id), password (string password of the admin).

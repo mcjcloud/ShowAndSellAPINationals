@@ -1,0 +1,1 @@
+﻿Invalid parameters to update group. Use the following fields: newName (name of group), password (admin password for qroup).

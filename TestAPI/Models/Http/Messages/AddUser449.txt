@@ -1,0 +1,1 @@
+﻿Invalid arguments to create a user. Use the following fields: username, password, firstName, lastName, email.
