@@ -121,6 +121,8 @@ namespace TestAPI.Migrations
                     b.Property<string>("SSRatingId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("GroupId");
+
                     b.Property<int>("Rating");
 
                     b.Property<string>("UserId");

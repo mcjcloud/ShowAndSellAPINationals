@@ -240,6 +240,7 @@ namespace ShowAndSellAPI.Controllers
             // add the group to the database.
             groupRequest.Group.SSGroupId = Guid.NewGuid().ToString();
             groupRequest.Group.DateCreated = DateTime.Now;
+            groupRequest.Group.Rating = 0.0f;
             _context.Groups.Add(groupRequest.Group);
             _context.SaveChanges();
 
@@ -256,17 +257,20 @@ namespace ShowAndSellAPI.Controllers
             if (user == null) return NotFound("User not found");
             if (!user.Password.Equals(password)) return Unauthorized();
 
-            double sum = 0.0;
+            float sum = 0.0f;
             bool exists = false;
             foreach(var rat in _context.Ratings)
             {
-                if(rat.UserId.Equals(user.SSUserId))
+                if (rat.GroupId.Equals(id))
                 {
-                    // change the user's rating
-                    rat.Rating = rating;
-                    exists = true;
+                    if (rat.UserId.Equals(user.SSUserId))
+                    {
+                        // change the user's rating
+                        rat.Rating = rating;
+                        exists = true;
+                    }
+                    sum += rat.Rating;
                 }
-                sum += rat.Rating;
             }
 
             if(!exists)
@@ -275,17 +279,20 @@ namespace ShowAndSellAPI.Controllers
                 _context.Ratings.Add(new SSRating {
                     SSRatingId = Guid.NewGuid().ToString(),
                     UserId = userId,
+                    GroupId = id,
                     Rating = rating
                 });
+                _context.SaveChanges();
+                sum += rating;
             }
 
-            sum += rating;
-            float newRating = (float) sum / Math.Max(1, _context.Ratings.Count());
+            Debug.WriteLine("rating: " + rating + " sum: " + sum + " Max(1, count): " + Math.Max(1, _context.Ratings.Count()) + " as array: " + Math.Max(1, _context.Ratings.ToArray().Count()) + " new rating: " + (sum / Math.Max(1, _context.Ratings.Count())));
+            float newRating = sum / Math.Max(1, _context.Ratings.Count());
             group.Rating = newRating;
 
             // save and return
             _context.SaveChanges();
-            return new ObjectResult(newRating);
+            return new ObjectResult(group.Rating);
         }
 
         // /api/groups/update?id={group id}
@@ -315,6 +322,7 @@ namespace ShowAndSellAPI.Controllers
             groupToUpdate.Name = groupRequest.NewName;
             groupToUpdate.LocationDetail = groupRequest.NewLocationDetail;
             groupToUpdate.Address = groupRequest.NewAddress;
+            groupToUpdate.Routing = groupRequest.NewRouting;
             groupToUpdate.Latitude = groupRequest.NewLatitude;
             groupToUpdate.Longitude = groupRequest.NewLongitude;
             _context.Update(groupToUpdate);

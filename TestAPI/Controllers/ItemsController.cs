@@ -190,7 +190,7 @@ namespace ShowAndSellAPI.Controllers
             var group = _context.Groups.Where(e => e.SSGroupId.Equals(item.GroupId)).FirstOrDefault();
             if (group == null) return NotFound("Group not found.");
 
-            var task =  SendMail(user, item, group);
+            var task = SendMail(user, item, group);
             return StatusCode(200, "Fake recipet sent.");
         }
         // /api/items/fullimage?itemId={item id}
@@ -375,7 +375,7 @@ namespace ShowAndSellAPI.Controllers
         /*
          * Helper methods
          */
-         static async Task SendMail(SSUser user, SSItem item, SSGroup supplier)
+        static async Task SendMail(SSUser user, SSItem item, SSGroup supplier)
         {
             var emailMessage = new MimeMessage();
             
@@ -385,29 +385,16 @@ namespace ShowAndSellAPI.Controllers
             emailMessage.Subject = "Purchase Confirmation";
 
             var builder = new BodyBuilder();
-            //var cshtml = System.IO.File.ReadAllText();
-
-            /*
-            var engine = EngineFactory.CreatePhysical(@"~/Views/ItemReceipt.cshtml");
-
-            var model = new EmailModel()
-            {
-                Item = item,
-                Buyer = user,
-
-            };
-            */
-
-            //string result = engine.Parse("Test.cshtml", model);
 
             builder.HtmlBody = "<html><body><h1>Purchase Confirmation</h1><p>Confirmation of your purchase of " + item.Name + "</p><p>with ID " + item.SSItemId + "</p><p>You can pick up your item at " + supplier.Address + "</p></body></html>";
+            //builder.HtmlBody = System.IO.File.ReadAllText("ItemReceipt.html");
+            Debug.WriteLine("html: " + builder.HtmlBody);
             emailMessage.Body = builder.ToMessageBody();
 
             using (var client = new SmtpClient())
             {
-
-                await client.ConnectAsync("smtp.gmail.com", 465, MailKit.Security.SecureSocketOptions.SslOnConnect).ConfigureAwait(false);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
+                await client.ConnectAsync("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.SslOnConnect).ConfigureAwait(false);
                 await client.AuthenticateAsync("showandsellmail@gmail.com", "Brayden14").ConfigureAwait(false);
                 await client.SendAsync(emailMessage).ConfigureAwait(false);
                 await client.DisconnectAsync(true).ConfigureAwait(false);
