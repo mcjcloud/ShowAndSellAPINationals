@@ -514,6 +514,44 @@
                     </table>
                 </div>
             </div>
+            <div class="method" id="AllApprovedInRange">
+                <p class="alignLeft">GET AllApprovedInRange</p>
+                <p class="alignRight">GET an array of all approved Items, from index start (inclusive) to end (exclusive)</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/items/allapprovedinrange?start={start (int)}&end={end (int)}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>No Approved items found.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Array of Items returned from start to end.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <div class="method" id="SearchGroup">
                 <p class="alignLeft">GET SearchGroup</p>
                 <p class="alignRight">GET an array of Items with a given name, in a given Group.</p>
@@ -1375,6 +1413,94 @@
                         <tr>
                             <td>200</td>
                             <td>Group created. Returns the created Group.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="DonateToGroup">
+                <p class="alignLeft">POST DonateToGroup</p>
+                <p class="alignRight">POST donate money under the given userId and password.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/donatetogroup?id={group id}&userId={id of user buying}&password={password of user buying}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>token</td>
+                            <td>(string) the token from calling PaymentToken</td>
+                        </tr>
+                        <tr>
+                            <td>paymentMethodNonce</td>
+                            <td>(string) the payment method nonce (see <a href="https://developers.braintreepayments.com/start/hello-client/ios/v4">Braintree Client Docs</a>)</td>
+                        </tr>
+                        <tr>
+                            <td>amount</td>
+                            <td>(double) the amount to donate</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>User not found. Group not found.</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Password is incorrect.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Returns the Braintree result.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="method" id="Rating">
+                <p class="alignLeft">GET Rating</p>
+                <p class="alignRight">Get a current posted rating.</p>
+                <div style="clear: both;"></div>
+                <div class="dropDown">
+                    <hr />
+                    <p class="alignLeft">Request URL</p>
+                    <p class="alignRight">/api/groups/rating?groupId={group id}&userId={the GUID of the user rating the group}</p>
+                    <div style="clear: both;"></div>
+
+                    <p>Json</p>
+                    <table>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>No parameters</td>
+                            <td>No parameters</td>
+                        </tr>
+                    </table>
+                    <p>Responses</p>
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Reason</th>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Rating not found with specified Group and User.</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>Rating applied. Returns rating ID, User ID, Group ID, and rating as json.</td>
                         </tr>
                     </table>
                 </div>

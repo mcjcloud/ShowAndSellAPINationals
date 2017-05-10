@@ -12,6 +12,7 @@ using System.Net;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
 using System.Diagnostics;
+using Braintree;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,6 +23,14 @@ namespace ShowAndSellAPI.Controllers
     {
         // Properties
         private readonly SSDbContext _context;
+
+        BraintreeGateway gateway = new BraintreeGateway
+        {
+            Environment = Braintree.Environment.SANDBOX,
+            MerchantId = "wtzxfs9zm7pb44b4",
+            PublicKey = "j3ths8zxg82drjzd",
+            PrivateKey = "2ab009256367eccc5c05fb3d5c5534bd"
+        };
 
         // CONSTRUCTOR
         public GroupsController(SSDbContext context)
@@ -247,6 +256,52 @@ namespace ShowAndSellAPI.Controllers
             return new ObjectResult(groupRequest.Group);
         }
 
+        [HttpGet]
+        public IActionResult Rating([FromQuery]string groupId, [FromQuery]string userId)
+        {
+            SSRating rating = _context.Ratings.Where(e => e.GroupId.Equals(groupId) && e.UserId.Equals(userId)).FirstOrDefault();
+            if (rating == null)
+            {
+                return NotFound("Rating not found.");
+            }
+            else
+            {
+                return new ObjectResult(rating);
+            }
+        }
+
+        // POST a donation to a group
+        [HttpPost]
+        public IActionResult DonateToGroup([FromQuery]string id, [FromQuery]string userId, [FromQuery]string password, [FromBody]BuyItemRequest body)
+        {
+            SSGroup group = _context.Groups.Where(e => e.SSGroupId.Equals(id)).FirstOrDefault();
+            if (group == null) return NotFound("Group not found.");
+
+            SSUser customer = _context.Users.Where(e => e.SSUserId.Equals(userId)).FirstOrDefault();
+            if (customer == null) return NotFound("User with ID " + userId + " not found.");
+
+            // authenticate
+            if (!customer.Password.Equals(password)) return Unauthorized();
+
+            // send purchase request
+            var request = new TransactionRequest
+            {
+                Amount = new Decimal(body.Amount),
+                PaymentMethodNonce = body.PaymentMethodNonce,
+                Options = new TransactionOptionsRequest
+                {
+                    SubmitForSettlement = true
+                }
+            };
+            Result<Transaction> result = gateway.Transaction.Sale(request);
+
+            // TODO: send custom email
+
+            // return result
+            return new ObjectResult(result);
+        }
+
+        // POST a rating for a group
         [HttpPost]
         public IActionResult RateGroup([FromQuery]string id, [FromQuery]int rating, [FromQuery]string userId, [FromQuery]string password)
         {
@@ -259,14 +314,16 @@ namespace ShowAndSellAPI.Controllers
 
             float sum = 0.0f;
             bool exists = false;
-            foreach(var rat in _context.Ratings)
+            SSRating newRat = null;
+            foreach (var rat in _context.Ratings)
             {
-                if (rat.GroupId.Equals(id))
+                if (rat.GroupId.Equals(group.SSGroupId))
                 {
                     if (rat.UserId.Equals(user.SSUserId))
                     {
                         // change the user's rating
                         rat.Rating = rating;
+                        newRat = rat;
                         exists = true;
                     }
                     sum += rat.Rating;
@@ -276,23 +333,29 @@ namespace ShowAndSellAPI.Controllers
             if(!exists)
             {
                 // create new Ratings
-                _context.Ratings.Add(new SSRating {
+                newRat = new SSRating
+                {
                     SSRatingId = Guid.NewGuid().ToString(),
                     UserId = userId,
                     GroupId = id,
                     Rating = rating
-                });
+                };
+                _context.Ratings.Add(newRat);
                 _context.SaveChanges();
                 sum += rating;
             }
 
             Debug.WriteLine("rating: " + rating + " sum: " + sum + " Max(1, count): " + Math.Max(1, _context.Ratings.Count()) + " as array: " + Math.Max(1, _context.Ratings.ToArray().Count()) + " new rating: " + (sum / Math.Max(1, _context.Ratings.Count())));
-            float newRating = sum / Math.Max(1, _context.Ratings.Count());
+            float newRating = sum / Math.Max(1, _context.Ratings.Where(e => e.GroupId.Equals(group.SSGroupId)).Count());
             group.Rating = newRating;
+            var response = new RatingResponse
+            {
+                Rating = newRating
+            };
 
             // save and return
             _context.SaveChanges();
-            return new ObjectResult(group.Rating);
+            return new ObjectResult(response);
         }
 
         // /api/groups/update?id={group id}

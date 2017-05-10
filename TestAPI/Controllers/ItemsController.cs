@@ -87,6 +87,34 @@ namespace ShowAndSellAPI.Controllers
             if (items.Count() <= 0) return NotFound("No Items in group.");
             else return new ObjectResult(items);
         }
+
+        // /api/items/allapprovedinrange?start={start (int)}&end={end (int)}
+        // GET all approved items across all groups
+        [HttpGet]
+        public IActionResult AllApprovedInRange([FromQuery]int start, [FromQuery]int end)
+        {
+            IEnumerable<SSItem> approvedItems = _context.Items.Where(e => e.Approved);
+
+            int finish = (end >= 0 && end <= approvedItems.Count()) ? end : approvedItems.Count();    // end > 0 and less than equal to the array size, default to 0.
+            int begin = (start >= 0 && start <= finish) ? start : 0;                                  // make sure start is greater than 0 and lessequal to end. Default to 0
+
+            List<SSItem> items = new List<SSItem>();
+            for (int i = begin, j = 0; i < finish; i++)
+            {
+                var itemToInsert = approvedItems.ToArray().GetValue(i);
+                items.Insert(j, itemToInsert as SSItem);
+                j += 1;
+            }
+
+            // check size
+            if (items.Count() <= 0)
+            {
+                return NotFound("No approved Items found in the specified Group.");
+            }
+
+            return new ObjectResult(items);
+        }
+
         // /api/items/itemsinrange?groupId={group id}&start={start (int)}&end={end (int)}
         // GET an array of Items in a given Group, from index start (inclusive) to end (exclusive)
         [HttpGet]
@@ -375,7 +403,7 @@ namespace ShowAndSellAPI.Controllers
         /*
          * Helper methods
          */
-        static async Task SendMail(SSUser user, SSItem item, SSGroup supplier)
+        public async Task SendMail(SSUser user, SSItem item, SSGroup supplier)
         {
             var emailMessage = new MimeMessage();
             
@@ -394,7 +422,7 @@ namespace ShowAndSellAPI.Controllers
             using (var client = new SmtpClient())
             {
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.ConnectAsync("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.SslOnConnect).ConfigureAwait(false);
+                await client.ConnectAsync("smtp.gmail.com", 465, MailKit.Security.SecureSocketOptions.SslOnConnect).ConfigureAwait(false);
                 await client.AuthenticateAsync("showandsellmail@gmail.com", "Brayden14").ConfigureAwait(false);
                 await client.SendAsync(emailMessage).ConfigureAwait(false);
                 await client.DisconnectAsync(true).ConfigureAwait(false);
